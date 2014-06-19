@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A module for globally managing and maintaining references between all open windows in a node-webkit application.",
   "main": "windowManager.js",
+  "url": "https://github.com/varunvairavan/node-webkit-window-manager",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
