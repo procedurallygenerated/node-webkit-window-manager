@@ -1,0 +1,25 @@
+{
+  "name": "node-webkit-window-manager",
+  "version": "0.0.1",
+  "description": "A module for globally managing and maintaining references between all open windows in a node-webkit application.",
+  "main": "windowManager.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodewebkit",
+    "windowmanager",
+    "window",
+    "manager",
+    "node-webkit"
+  ],
+  "author": "Varun Vairavan",
+  "contributors": [
+    "James Mortensen"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "underscore": "^1.6.0"
+  }
+}
