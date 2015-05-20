@@ -24,7 +24,7 @@ var windows = {
  * module, but it can be passed into the module and stored as a reference. If _windows argument is
  * ommitted, this module defaults to managing only the index page located at html/index.html.
  *
- * @param {nw.gui} gui This is the require('nw.gui') object. 
+ * @param {nw.gui} gui This is the require('nw.gui') object.
  * @param {Object} _windows Optional collection of windows to load into the module to be managed.
  */
 function WindowManager(gui, _windows) {
@@ -35,7 +35,7 @@ function WindowManager(gui, _windows) {
 
 
 /**
- * Open the managed window identified by "name". 
+ * Open the managed window identified by "name".
  *
  * @param {String} name The name of the window to open, identified by the key in the windows object.
  * @param {Object} data A collection of data to pass from the calling window or module to the target window.
@@ -43,29 +43,39 @@ function WindowManager(gui, _windows) {
  */
 WindowManager.prototype.open = function(name, data) {
 	var _self = this;
-	var windowRef = _self.gui.Window.open(windows[name].page,windows[name].options);
-	windowRef.on('close',function(){
-		this.hide();
-		_self.openWindows = _.without(_self.openWindows,windowRef);
-		this.close(true);
-		this.closed = true;
-		_self.openWindows = _self.openWindows.filter(function(element) {
-		  return element.closed === undefined;
+	var win = _.find(_self.openWindows, function (openWin) {
+		return openWin.name = name;
+	});
+
+	if (! win) {
+		var windowRef = _self.gui.Window.open(windows[name].page, windows[name].options);
+		windowRef.on('close', function () {
+			this.hide();
+			_self.openWindows = _.without(_self.openWindows, windowRef);
+			this.close(true);
+			this.closed = true;
+			_self.openWindows = _self.openWindows.filter(function (element) {
+				return element.closed === undefined;
+			});
 		});
-	});
-	windowRef.on('load',function() {
-		windowRef.window.console.warn("MESSAGES AFDAFDAS FDAS F");
-	});
-	windowRef.name = name;
-	windowRef.data = data;
-	_self.openWindows.push(windowRef);
-	return windowRef;
+		windowRef.on('load', function () {
+			windowRef.window.console.warn("MESSAGES AFDAFDAS FDAS F");
+		});
+		windowRef.name = name;
+		windowRef.data = data;
+
+		_self.openWindows.push(windowRef);
+
+		return windowRef;
+	}
+
+	return null;
 }
 
 
 /**
  * Close the window identified by "name".
- * 
+ *
  * @param {String} name The name of a window to close, identified by the key in the windows object.
  * @return {Object} Returns a reference to the closed window.
  */
